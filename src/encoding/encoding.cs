@@ -24,13 +24,6 @@ public static class CharEncoding
         return -1;
     }
 
-    //Used to display errors when an unsupported Character is found
-    private static void AlienCharacterError(char alien)
-    {
-        Console.Error.WriteLine($"Error!\nUnrecognized character found in input: {alien}\nBleepBoop currently does not support this character.");
-        Environment.Exit(1);
-    }
-
     public static string Encode(string input)
     {
         List<char> content = input.ToList();
@@ -66,7 +59,37 @@ public static class CharEncoding
             }
             else //Unrecognized character found
             {
-                AlienCharacterError(content[0]);
+                Console.Error.WriteLine($"Error!\nUnrecognized character found in input: {content[0]}\nBleepBoop currently does not support this character.");
+                Environment.Exit(1);                
+            }
+        }
+
+        return output;
+    }
+
+    public static string Decode(string input)
+    {
+        List<char> content = input.ToList();
+        string output = "";
+
+        //Parses and decodes text
+        while (content.Count > 0)
+        {
+            if (content[0] == 'C')
+            {
+                content.RemoveAt(0);
+
+                string charIndexBuild = "";
+
+                while (char.IsDigit(content[0]) && content.Count >= 0)
+                {
+                    charIndexBuild += content[0];
+                    content.RemoveAt(0);
+                }
+
+                int charIndex = Convert.ToInt32(charIndexBuild);
+
+                output += encodings['C'][charIndex];
             }
         }
 
