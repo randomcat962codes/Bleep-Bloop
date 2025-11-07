@@ -56,3 +56,6 @@ nunit-*.xml
 # Codespace
 *.devcontainer/
 *.github/
+
+# Other
+*.sln
