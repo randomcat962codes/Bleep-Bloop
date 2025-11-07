@@ -1,6 +1,6 @@
 namespace BleepBloop;
 
-private static class encoding
+public static class CharEncoding
 {
     private static Dictionary<char, char[]> encodings = new() //This dictionary contains encoding information
     {
@@ -11,34 +11,65 @@ private static class encoding
         {'S', [' ','~','`','@','#','$','%','^','&','*','(',')','_','-','+','=','|','\\','{','}','[',']',':',';','"','\'','<','>','/']}
     };
 
-    public static string Encode(string input)
+    //Why does char[] not have an IndexOf() function?
+    private static int GetIndex(char[] arr, int index)
     {
-        char[] content = input.ToList();
-        string output = "";
-
-        //Parses text and converts it
-        while (content.Count > 0)
+        for (int i = 0; i < arr.Length; i++)
         {
-            if (content[0] == 'C')
+            if (arr[i] == index)
             {
-
-            }
-            else if (content[0] == 'L')
-            {
-
-            }
-            else if (content[0] == 'N')
-            {
-
-            }
-            else if (content[0] == 'P')
-            {
-
-            }
-            else if (content[0] == 'S')
-            {
-
+                return i;
             }
         }
+        return -1;
+    }
+
+    //Used to display errors when an unsupported Character is found
+    private static void AlienCharacterError(char alien)
+    {
+        Console.Error.WriteLine($"Error!\nUnrecognized character found in input: {alien}\nBleepBoop currently does not support this character.");
+        Environment.Exit(1);
+    }
+
+    public static string Encode(string input)
+    {
+        List<char> content = input.ToList();
+        string output = "";
+
+        //Parses and encodes text
+        while (content.Count > 0)
+        {
+            if (encodings['C'].Contains(content[0]))
+            {
+                output += $"C{Convert.ToString(GetIndex(encodings['C'], content[0]))}";
+                content.RemoveAt(0);
+            }
+            else if (encodings['L'].Contains(content[0]))
+            {
+                output += $"L{Convert.ToString(GetIndex(encodings['L'], content[0]))}";
+                content.RemoveAt(0);
+            }
+            else if (encodings['N'].Contains(content[0]))
+            {
+                output += $"N{Convert.ToString(GetIndex(encodings['N'], content[0]))}";
+                content.RemoveAt(0);
+            }
+            else if (encodings['P'].Contains(content[0]))
+            {
+                output += $"P{Convert.ToString(GetIndex(encodings['P'], content[0]))}";
+                content.RemoveAt(0);
+            }
+            else if (encodings['S'].Contains(content[0]))
+            {
+                output += $"S{Convert.ToString(GetIndex(encodings['S'], content[0]))}";
+                content.RemoveAt(0);
+            }
+            else //Unrecognized character found
+            {
+                AlienCharacterError(content[0]);
+            }
+        }
+
+        return output;
     }
 }
