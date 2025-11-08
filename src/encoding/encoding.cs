@@ -73,7 +73,7 @@ public static class CharEncoding
         string output = "";
 
         //Parses and decodes text
-        while (content.Count > 0)
+        while (content.Count > 0 && char.IsDigit(content[0]))
         {
             if (content[0] == 'C')
             {
@@ -81,7 +81,7 @@ public static class CharEncoding
 
                 string charIndexBuild = "";
 
-                while (char.IsDigit(content[0]) && content.Count > 0)
+                while (content.Cound)
                 {
                     charIndexBuild += content[0];
                     content.RemoveAt(0);
