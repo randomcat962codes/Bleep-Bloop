@@ -29,34 +29,20 @@ public static class CharEncoding
         List<char> content = input.ToList();
         string output = "";
 
+        void AddToOutput(char notation)
+        {
+            output += $"{notation}{Convert.ToString(GetIndex(encodings[notation], content[0]))}";
+            content.RemoveAt(0);
+        }
+
         //Parses and encodes text
         while (content.Count > 0)
         {
-            if (encodings['C'].Contains(content[0]))
-            {
-                output += $"C{Convert.ToString(GetIndex(encodings['C'], content[0]))}";
-                content.RemoveAt(0);
-            }
-            else if (encodings['L'].Contains(content[0]))
-            {
-                output += $"L{Convert.ToString(GetIndex(encodings['L'], content[0]))}";
-                content.RemoveAt(0);
-            }
-            else if (encodings['N'].Contains(content[0]))
-            {
-                output += $"N{Convert.ToString(GetIndex(encodings['N'], content[0]))}";
-                content.RemoveAt(0);
-            }
-            else if (encodings['P'].Contains(content[0]))
-            {
-                output += $"P{Convert.ToString(GetIndex(encodings['P'], content[0]))}";
-                content.RemoveAt(0);
-            }
-            else if (encodings['S'].Contains(content[0]))
-            {
-                output += $"S{Convert.ToString(GetIndex(encodings['S'], content[0]))}";
-                content.RemoveAt(0);
-            }
+            if (encodings['C'].Contains(content[0])) AddToOutput('C');
+            else if (encodings['L'].Contains(content[0])) AddToOutput('L');
+            else if (encodings['N'].Contains(content[0])) AddToOutput('N');
+            else if (encodings['P'].Contains(content[0])) AddToOutput('P');
+            else if (encodings['S'].Contains(content[0])) AddToOutput('S');
             else //Unrecognized character found
             {
                 Console.Error.WriteLine($"Error!\nUnrecognized character found in input: {content[0]}\nBleepBoop currently does not support this character.");
