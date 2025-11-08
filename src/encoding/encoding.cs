@@ -73,7 +73,7 @@ public static class CharEncoding
         string output = "";
 
         //Parses and decodes text
-        while (content.Count > 0 && char.IsDigit(content[0]))
+        while (content.Count > 0)
         {
             if (content[0] == 'C')
             {
@@ -81,7 +81,9 @@ public static class CharEncoding
 
                 string charIndexBuild = "";
 
-                while (content.Cound)
+                if (content.Count == 0) break;
+
+                while (content.Count > 0 && char.IsDigit(content[0]))
                 {
                     charIndexBuild += content[0];
                     content.RemoveAt(0);
@@ -90,14 +92,6 @@ public static class CharEncoding
                 int charIndex = Convert.ToInt32(charIndexBuild);
 
                 output += encodings['C'][charIndex];
-
-                //Debugging
-                string debugString = "";
-                foreach (char x in content)
-                {
-                    debugString += x;
-                }
-                Console.WriteLine($"{encodings['C'][charIndex]} | {content.Count} | {debugString}");
             }
         }
 
