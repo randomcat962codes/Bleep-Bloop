@@ -52,3 +52,11 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Codespace
+*.devcontainer/
+*.github/
+
+# Other
+*.sln
+*test.cs
