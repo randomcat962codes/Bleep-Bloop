@@ -69,14 +69,18 @@ public static class CharEncoding
 
     public static string Decode(string input)
     {
+        char[] encodingNotation = encodings.Keys.ToArray();
+
         List<char> content = input.ToList();
         string output = "";
 
         //Parses and decodes text
         while (content.Count > 0)
         {
-            if (content[0] == 'C')
+            if (encodingNotation.Contains(content[0]))
             {
+                char notation = content[0];
+
                 content.RemoveAt(0);
 
                 string charIndexBuild = "";
@@ -91,7 +95,7 @@ public static class CharEncoding
 
                 int charIndex = Convert.ToInt32(charIndexBuild);
 
-                output += encodings['C'][charIndex];
+                output += encodings[notation][charIndex];
             }
         }
 
