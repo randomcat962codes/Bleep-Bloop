@@ -10,6 +10,7 @@ public class Token
         TextType,
         ListType,
         DictionaryType,
+        DynamicType,
 
         Quote,
         Colon,
@@ -45,5 +46,30 @@ public class Token
 
 public static class Lexer
 {
-    
+    private static Dictionary<string, Token.TokenType> reservedKeywords = new() 
+    {
+        {"TXT", Token.TokenType.TextType},
+        {"LST", Token.TokenType.ListType},
+        {"DCT", Token.TokenType.DictionaryType},
+        {"DYN", Token.TokenType.DynamicType}
+    };
+
+    public static Token[] Parse(string input)
+    {
+        char[] content = input.ToList();
+        List<Token> output = new(); 
+
+        //Used to add the token to the output and remove the last processed character from the list
+        void BuildToken(TokenType type, string value)
+        {
+            output.Add(new Token(type, value));
+            output.RemoveAt(0);
+        }
+
+        while (content.Count > 0)
+        {
+            if (content[0] == '<') BuildToken(TokenType.OpenTypeIdentifier, "<");
+            else if (content[0] == '>') BuildTokwn(TokenType.CloseTypeIdentifier, ">");
+        }
+    }
 }
