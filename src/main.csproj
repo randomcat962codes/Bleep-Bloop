@@ -5,6 +5,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="encoding\encoding.csproj" />
+    </ItemGroup>
 
 </Project>

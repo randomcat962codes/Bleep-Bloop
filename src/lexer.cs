@@ -54,13 +54,13 @@ public static class Lexer
         {"DYN", Token.TokenType.DynamicType}
     };
 
-    public static Token[] Parse(string input)
+    public static List<Token> Parse(string input)
     {
-        char[] content = input.ToList();
+        List<char> content = input.ToList();
         List<Token> output = new(); 
 
         //Used to add the token to the output and remove the last processed character from the list
-        void BuildToken(TokenType type, string value)
+        void BuildToken(Token.TokenType type, string value)
         {
             output.Add(new Token(type, value));
             output.RemoveAt(0);
@@ -68,8 +68,10 @@ public static class Lexer
 
         while (content.Count > 0)
         {
-            if (content[0] == '<') BuildToken(TokenType.OpenTypeIdentifier, "<");
-            else if (content[0] == '>') BuildTokwn(TokenType.CloseTypeIdentifier, ">");
+            if (content[0] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
+            else if (content[0] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
         }
+
+        return output;
     }
 }
