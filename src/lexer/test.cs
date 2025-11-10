@@ -7,9 +7,9 @@ using SimpleEncoding;
 // This will create a file in the running direcctory called "output".
 // It parses the content in test.save (an example file,) and shows the results there.
 
-List<Token> test = Lexer.Parse(File.ReadAllText("test.save"));
+Token[] test = Lexer.Parse(File.ReadAllText("test.save"));
 
-string[] lines = new string[test.Count];
+string[] lines = new string[test.Length];
 
 for (int i = 0; i < lines.Length; i++)
 {
