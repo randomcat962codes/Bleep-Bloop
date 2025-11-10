@@ -4,25 +4,23 @@ public class Token
 {
     public enum TokenType
     {
-        //Mark finished identifiers with a coment saying "done" when they are handled.
-        //The comments here will be removed before finalizing the code.
-        OpenTypeIdentifier, //done
-        CloseTypeIdentifier, //done
+        OpenTypeIdentifier,
+        CloseTypeIdentifier, 
 
         TextType,
         ListType,
         DictionaryType,
         DynamicType,
 
-        Quote, //done
-        Colon, //done
-        Seperator, //done
+        Quote, 
+        Colon,
+        Seperator,
 
-        OpenBracket, //done
-        CloseBracket, //done
+        OpenBracket, 
+        CloseBracket, 
 
-        OpenSquareBracket, //done
-        CloseSquareBracket, //done
+        OpenSquareBracket, 
+        CloseSquareBracket, 
 
         Identifier,
     }
@@ -83,7 +81,22 @@ public static class Lexer
             //Multi-char tokens
             else
             {
-                
+                string buffer = "";
+
+                while (content.Count > 0 && !"<>\":,{}[]".Contains(content[0]))
+                {
+                    buffer += content[0];
+                    content.RemoveAt(0);
+                }
+
+                if (reservedKeywords.ContainsKey(buffer))
+                {
+                    BuildToken(reservedKeywords[buffer], buffer);
+                }
+                else
+                {
+                    output.Add(new Token(Token.TokenType.Identifier, buffer));
+                }
             }
         }
 
