@@ -76,13 +76,41 @@ public static class Lexer
                 BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
                 Advance();
             }
-            else if (input[index] == '"') BuildToken(Token.TokenType.Quote, "\"");
-            else if (input[index] == ':') BuildToken(Token.TokenType.Colon, ":");
-            else if (input[index] == ',') BuildToken(Token.TokenType.Seperator, ",");
-            else if (input[index] == '{') BuildToken(Token.TokenType.OpenBracket, "{");
-            else if (input[index] == '}') BuildToken(Token.TokenType.CloseBracket, "}");
-            else if (input[index] == '[') BuildToken(Token.TokenType.OpenSquareBracket, "[");
-            else if (input[index] == ']') BuildToken(Token.TokenType.CloseSquareBracket, "]");
+            else if (input[index] == '"')
+            {
+                BuildToken(Token.TokenType.Quote, "\"");
+                Advance();
+            }
+            else if (input[index] == ':')
+            {
+                BuildToken(Token.TokenType.Colon, ":");
+                Advance();
+            }
+            else if (input[index] == ',')
+            {
+                BuildToken(Token.TokenType.Seperator, ",");
+                Advance();
+            }
+            else if (input[index] == '{')
+            {
+                BuildToken(Token.TokenType.OpenBracket, "{");
+                Advance();
+            }
+            else if (input[index] == '}')
+            {
+                BuildToken(Token.TokenType.CloseBracket, "}");
+                Advance();
+            }
+            else if (input[index] == '[')
+            {
+                BuildToken(Token.TokenType.OpenSquareBracket, "[");
+                Advance();
+            }
+            else if (input[index] == ']')
+            {
+                BuildToken(Token.TokenType.CloseSquareBracket, "]");
+                Advance();
+            }
             //Multi-char tokens
             else
             {
