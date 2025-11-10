@@ -59,4 +59,3 @@ nunit-*.xml
 
 # Other
 *.sln
-*test.cs
