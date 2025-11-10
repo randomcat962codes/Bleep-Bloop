@@ -62,8 +62,8 @@ public static class Lexer
         //Used to add the token to the output and remove the last processed character from the list
         void BuildToken(Token.TokenType type, string value)
         {
-            output.Add(new Token(type, value));
-            output.RemoveAt(0);
+            content.Add(new Token(type, value));
+            content.RemoveAt(0);
         }
 
         while (content.Count > 0)
