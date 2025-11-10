@@ -4,23 +4,25 @@ public class Token
 {
     public enum TokenType
     {
-        OpenTypeIdentifier,
-        CloseTypeIdentifier,
+        //Mark finished identifiers with a coment saying "done" when they are handled.
+        //The comments here will be removed before finalizing the code.
+        OpenTypeIdentifier, //done
+        CloseTypeIdentifier, //done
 
         TextType,
         ListType,
         DictionaryType,
         DynamicType,
 
-        Quote,
-        Colon,
-        Seperator,
+        Quote, //done
+        Colon, //done
+        Seperator, //done
 
-        OpenBracket,
-        CloseBracket,
+        OpenBracket, //done
+        CloseBracket, //done
 
-        OpenSquareBracket,
-        CloseSquareBracket,
+        OpenSquareBracket, //done
+        CloseSquareBracket, //done
 
         Identifier,
     }
@@ -68,8 +70,21 @@ public static class Lexer
 
         while (content.Count > 0)
         {
+            //Single char tokens
             if (content[0] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
             else if (content[0] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
+            else if (content[0] == '"') BuildToken(Token.TokenType.Quote, "\"");
+            else if (content[0] == ':') BuildToken(Token.TokenType.Colon, ":");
+            else if (content[0] == ',') BuildToken(Token.TokenType.Seperator, ",");
+            else if (content[0] == '{') BuildToken(Token.TokenType.OpenBracket, "{");
+            else if (content[0] == '}') BuildToken(Token.TokenType.CloseBracket, "}");
+            else if (content[0] == '[') BuildToken(Token.TokenType.OpenSquareBracket, "[");
+            else if (content[0] == ']') BuildToken(Token.TokenType.CloseSquareBracket, "]");
+            //Multi-char tokens
+            else
+            {
+                
+            }
         }
 
         return output;
