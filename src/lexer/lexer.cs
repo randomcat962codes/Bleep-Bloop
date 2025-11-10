@@ -60,20 +60,22 @@ public static class Lexer
         List<Token> output = new();
 
         void Advance() => index++;
-
-        //Used to add the token to the output and remove the last processed character from the list
-        void BuildToken(Token.TokenType type, string value)
-        {
-            output.Add(new Token(type, value));
-            Advance();
-        }
+        void BuildToken(Token.TokenType type, string value) => output.Add(new Token(type, value));
 
         while (index < input.Length)
         {
             if (input[index] == ' ' || input[index] == '\t' || input[index] == '\0') Advance();
             //Single char tokens
-            else if (input[index] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
-            else if (input[index] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
+            else if (input[index] == '<')
+            {
+                BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
+                Advance();
+            }
+            else if (input[index] == '>')
+            {
+                BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
+                Advance();
+            }
             else if (input[index] == '"') BuildToken(Token.TokenType.Quote, "\"");
             else if (input[index] == ':') BuildToken(Token.TokenType.Colon, ":");
             else if (input[index] == ',') BuildToken(Token.TokenType.Seperator, ",");
