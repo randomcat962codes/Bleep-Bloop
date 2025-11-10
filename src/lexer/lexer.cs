@@ -54,40 +54,42 @@ public static class Lexer
         {"DYN", Token.TokenType.DynamicType}
     };
 
-    public static List<Token> Parse(string input)
+    public static Token[] Parse(string input)
     {
-        List<char> content = input.ToList();
-        List<Token> output = new(); 
+        int index = 0;
+        List<Token> output = new();
+
+        void Advance() => index++;
 
         //Used to add the token to the output and remove the last processed character from the list
         void BuildToken(Token.TokenType type, string value)
         {
             output.Add(new Token(type, value));
-            content.RemoveAt(0);
+            Advance();
         }
 
-        while (content.Count > 0)
+        while (index < input.Length)
         {
-            if (content[0] == ' ' || content[0] == '\t' || content[0] == '\0') content.RemoveAt(0);
+            if (input[index] == ' ' || input[index] == '\t' || input[index] == '\0') Advance();
             //Single char tokens
-            else if (content[0] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
-            else if (content[0] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
-            else if (content[0] == '"') BuildToken(Token.TokenType.Quote, "\"");
-            else if (content[0] == ':') BuildToken(Token.TokenType.Colon, ":");
-            else if (content[0] == ',') BuildToken(Token.TokenType.Seperator, ",");
-            else if (content[0] == '{') BuildToken(Token.TokenType.OpenBracket, "{");
-            else if (content[0] == '}') BuildToken(Token.TokenType.CloseBracket, "}");
-            else if (content[0] == '[') BuildToken(Token.TokenType.OpenSquareBracket, "[");
-            else if (content[0] == ']') BuildToken(Token.TokenType.CloseSquareBracket, "]");
+            else if (input[index] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
+            else if (input[index] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
+            else if (input[index] == '"') BuildToken(Token.TokenType.Quote, "\"");
+            else if (input[index] == ':') BuildToken(Token.TokenType.Colon, ":");
+            else if (input[index] == ',') BuildToken(Token.TokenType.Seperator, ",");
+            else if (input[index] == '{') BuildToken(Token.TokenType.OpenBracket, "{");
+            else if (input[index] == '}') BuildToken(Token.TokenType.CloseBracket, "}");
+            else if (input[index] == '[') BuildToken(Token.TokenType.OpenSquareBracket, "[");
+            else if (input[index] == ']') BuildToken(Token.TokenType.CloseSquareBracket, "]");
             //Multi-char tokens
             else
             {
                 string buffer = "";
 
-                while (content.Count > 0 && !"<>\":,{}[] ".Contains(content[0]))
+                while (index < input.Length && !"<>\":,{}[] ".Contains(input[index]))
                 {
-                    buffer += content[0];
-                    content.RemoveAt(0);
+                    buffer += input[index];
+                    Advance();
                 }
 
                 if (!string.IsNullOrWhiteSpace(buffer))
@@ -104,6 +106,6 @@ public static class Lexer
             }
         }
 
-        return output;
+        return output.ToArray();
     }
 }
