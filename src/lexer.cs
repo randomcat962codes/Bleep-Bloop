@@ -62,14 +62,15 @@ public static class Lexer
         //Used to add the token to the output and remove the last processed character from the list
         void BuildToken(Token.TokenType type, string value)
         {
-            content.Add(new Token(type, value));
+            output.Add(new Token(type, value));
             content.RemoveAt(0);
         }
 
         while (content.Count > 0)
         {
+            if (content[0] == ' ' || content[0] == '\t' || content[0] == '\0') content.RemoveAt(0);
             //Single char tokens
-            if (content[0] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
+            else if (content[0] == '<') BuildToken(Token.TokenType.OpenTypeIdentifier, "<");
             else if (content[0] == '>') BuildToken(Token.TokenType.CloseTypeIdentifier, ">");
             else if (content[0] == '"') BuildToken(Token.TokenType.Quote, "\"");
             else if (content[0] == ':') BuildToken(Token.TokenType.Colon, ":");
@@ -83,19 +84,22 @@ public static class Lexer
             {
                 string buffer = "";
 
-                while (content.Count > 0 && !"<>\":,{}[]".Contains(content[0]))
+                while (content.Count > 0 && !"<>\":,{}[] ".Contains(content[0]))
                 {
                     buffer += content[0];
                     content.RemoveAt(0);
                 }
 
-                if (reservedKeywords.ContainsKey(buffer))
+                if (!string.IsNullOrWhiteSpace(buffer))
                 {
-                    BuildToken(reservedKeywords[buffer], buffer);
-                }
-                else
-                {
-                    output.Add(new Token(Token.TokenType.Identifier, buffer));
+                    if (reservedKeywords.ContainsKey(buffer))
+                    {
+                        BuildToken(reservedKeywords[buffer], buffer);
+                    }
+                    else
+                    {
+                        output.Add(new Token(Token.TokenType.Identifier, buffer));
+                    }
                 }
             }
         }

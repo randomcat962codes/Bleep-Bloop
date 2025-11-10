@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="encoding\encoding.csproj" />
+      <ProjectReference Include=".\encoding\encoding.csproj" />
     </ItemGroup>
 
 </Project>
