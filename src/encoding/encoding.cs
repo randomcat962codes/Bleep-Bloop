@@ -1,4 +1,4 @@
-namespace BleepBloop;
+namespace SimpleEncoding;
 
 public static class CharEncoding
 {
@@ -82,6 +82,11 @@ public static class CharEncoding
                 int charIndex = Convert.ToInt32(charIndexBuild);
 
                 output += encodings[notation][charIndex];
+            }
+            else //There was an error parsing the content
+            {
+                Console.Error.WriteLine("There was an error decoding content.\nPlease make sure the content is formatted correcly and actually encoded.\nOtherwise, your on your own. I have no idea what's wrong.");
+                Environment.Exit(2);
             }
         }
 
