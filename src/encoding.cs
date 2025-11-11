@@ -1,4 +1,4 @@
-namespace SimpleEncoding;
+namespace BleepBloop;
 
 public static class CharEncoding
 {
